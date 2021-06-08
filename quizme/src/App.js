@@ -1,23 +1,32 @@
-import logo from './logo.svg';
+import React from 'react';
 import './App.css';
 
+
+class Timer extends React.Component{
+  state={
+    x:this.props.time
+  }
+  count(){
+    this.setState()
+  }
+  componentDidMount(){
+    // setInterval(this.count,1000);
+  }
+  render(){
+    return(this.state.x)}
+}
+
+class Counter extends React.Component{
+render(){
+  return(<div><Timer time="30.0"/><br/>
+  <Timer time="60.0"/><br/>
+  <Timer time="120.0"/></div>)
+}
+}
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Counter/>
     </div>
   );
 }
