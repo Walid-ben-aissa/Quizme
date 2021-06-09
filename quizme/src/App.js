@@ -1,12 +1,8 @@
 import React from "react";
 import Counter from "./Timer/Timer";
-import { Navbar, Row } from "react-bootstrap";
-import { Container } from "react-bootstrap";
-import { Nav } from "react-bootstrap";
-import { NavDropdown } from "react-bootstrap";
+import { Navbar, Row, Container, NavDropdown, Col, Nav } from "react-bootstrap";
 import "./App.css";
 import Logo from "./Me.png";
-import { Col } from "react-bootstrap";
 
 function Header() {
   return (
