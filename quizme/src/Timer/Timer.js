@@ -1,36 +1,34 @@
 import React from "react";
 
 class Timer extends React.Component {
-  state = {
-    x: parseFloat(this.props.time),
-    t: parseFloat(this.props.time),
-  };
-  count = () => {
-    this.setState({ x: this.state.x - 0.1 });
-  };
+  constructor(props) {
+    super(props);
+    this.state = { t: 0, t0: 0.0, tog: false };
+  }
   start = () => {
-    this.y = setInterval(this.count, 100);
-    this.t0 = performance.now();
+    this.setState({ tog: !this.state.tog });
+    console.log(this.state.tog);
+    const t0 = performance.now();
+    this.setState({ t0: t0 });
+    if (!this.state.tog) {
+      var y = setInterval(() => {
+        this.setState({
+          t: this.props.time - (performance.now() - t0) / 1000,
+        });
+      }, 10);
+    } else clearInterval(y);
   };
   componentDidMount() {
-    this.t = this.props.time;
-    console.log(this.t);
+    this.setState({ t: Number(this.props.time) });
   }
   render() {
-    console.log();
-    this.t = this.props.time - (performance.now() - this.t0) / 1000;
-    console.log();
-    if (this.t < 0) {
-      clearInterval(this.y);
-      this.t = 0;
-    }
     return (
       <div>
         <button className="btn-danger" onClick={this.start}>
           Start!
         </button>
         <br />
-        {Math.abs(this.t.toFixed(2))}
+        {Math.abs(this.state.t.toFixed(2))}
       </div>
     );
   }
@@ -38,7 +36,7 @@ class Timer extends React.Component {
 function Counter() {
   return (
     <div>
-      <Timer time="120" />
+      <Timer time="120.0" />
     </div>
   );
 }

@@ -1,18 +1,21 @@
 import React from "react";
 import Counter from "./Timer/Timer";
-import { Navbar } from "react-bootstrap";
+import { Navbar, Row } from "react-bootstrap";
 import { Container } from "react-bootstrap";
 import { Nav } from "react-bootstrap";
 import { NavDropdown } from "react-bootstrap";
 import "./App.css";
-import { ReactComponent as Logo } from "./logo.svg";
+import Logo from "./Me.png";
+import { Col } from "react-bootstrap";
 
 function Header() {
   return (
     <div>
       <Navbar bg="light" variant="light" expand="lg">
         <Container>
-          <Logo className="logo" />
+          <Col md={3} lg={1}>
+            <img alt="" src={Logo} className="logo" />
+          </Col>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
