@@ -3,7 +3,7 @@ import React from "react";
 class Timer extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { t: 0, t0: 0.0, tog: false };
+    this.state = { t: 0, t0: 0.0, tog: false, y: 0 };
   }
   start = () => {
     this.setState({ tog: !this.state.tog });
@@ -11,12 +11,16 @@ class Timer extends React.Component {
     const t0 = performance.now();
     this.setState({ t0: t0 });
     if (!this.state.tog) {
-      var y = setInterval(() => {
-        this.setState({
-          t: this.props.time - (performance.now() - t0) / 1000,
-        });
-      }, 10);
-    } else clearInterval(y);
+      this.setState({
+        y: setInterval(() => {
+          this.setState({
+            t: this.props.time - (performance.now() - t0) / 1000,
+          });
+        }, 10),
+      });
+    } else {
+      clearInterval(this.state.y);
+    }
   };
   componentDidMount() {
     this.setState({ t: Number(this.props.time) });
