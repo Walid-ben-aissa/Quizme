@@ -26,7 +26,9 @@ class Timer extends React.Component {
     }
     return (
       <div>
-        <button onClick={this.start}> Start!</button>
+        <button className="btn-danger" onClick={this.start}>
+          Start!
+        </button>
         <br />
         {Math.abs(this.t.toFixed(2))}
       </div>
