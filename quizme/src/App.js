@@ -1,47 +1,17 @@
 import React from "react";
-import Counter from "./Timer/Timer";
-import { Navbar, Row, Container, NavDropdown, Col, Nav } from "react-bootstrap";
+/* import Counter from "./Timer/Timer"; */
+import Header from "./Header/Header";
+import Home from "./Home/Home";
 import "./App.css";
-import Logo from "./Me.png";
+import { Route, Link, Switch, useLocation } from "react-router-dom";
 
-function Header() {
-  return (
-    <div>
-      <Navbar bg="light" variant="light" expand="lg">
-        <Container>
-          <Col md={3} lg={1}>
-            <img alt="" src={Logo} className="logo" />
-          </Col>
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="me-auto">
-              <Nav.Link href="">Home</Nav.Link>
-              <Nav.Link href="">Link</Nav.Link>
-              <NavDropdown title="Dropdown" id="basic-nav-dropdown">
-                <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.2">
-                  Another action
-                </NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.3">
-                  Something
-                </NavDropdown.Item>
-                <NavDropdown.Divider />
-                <NavDropdown.Item href="#action/3.4">
-                  Separated link
-                </NavDropdown.Item>
-              </NavDropdown>
-            </Nav>
-          </Navbar.Collapse>
-        </Container>
-      </Navbar>
-    </div>
-  );
-}
 function App() {
   return (
     <div>
       <Header />
-      <Counter />
+      <Switch>
+        <Route path="/" render={(props) => <Home />}></Route>
+      </Switch>
     </div>
   );
 }

@@ -1,4 +1,5 @@
 import React from "react";
+import { Button } from "react-bootstrap";
 
 class Timer extends React.Component {
   constructor(props) {
@@ -28,9 +29,9 @@ class Timer extends React.Component {
   render() {
     return (
       <div>
-        <button className="btn-danger" onClick={this.start}>
+        <Button size="lg" variant="info" onClick={this.start}>
           Start!
-        </button>
+        </Button>
         <br />
         {Math.abs(this.state.t.toFixed(2))}
       </div>
