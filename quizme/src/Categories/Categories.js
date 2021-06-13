@@ -1,19 +1,27 @@
-import React, { useState } from "react";
+import React from "react";
+import { Link } from "react-router-dom";
 
 class Categories extends React.Component {
-  /* state = { x: "" };
-  getcats() {
+  state = { x: "" };
+  componentDidMount() {
     fetch("https://opentdb.com/api_category.php")
       .then((response) => response.json())
       .then((data) => {
-        this.setState({ x: Object.values(data)[0] });
+        let y = data["trivia_categories"].map((element) => {
+          return (
+            <li>
+              <Link to={`/topic/${element["id"]}`} style={{ color: "white" }}>
+                {element["name"]}
+              </Link>
+            </li>
+          );
+        });
+        console.log(y);
+        this.setState({ x: y });
       });
-  } */
+  }
   render() {
-    /*  console.log(y);
-    y.map((val) => <li>{val}</li>); */
-    console.log("this.state.x");
-    return null;
+    return <ol style={{ color: "white" }}>{this.state.x}</ol>;
   }
 }
 export default Categories;
