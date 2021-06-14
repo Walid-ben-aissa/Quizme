@@ -11,8 +11,8 @@ import Topic from "./Topic/Topic";
 function App() {
   return (
     <div>
+      <Header />
       <Container fluid>
-        <Header />
         <Switch>
           <Route path="/categories">
             <Categories />
