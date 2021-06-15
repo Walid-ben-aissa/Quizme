@@ -10,11 +10,7 @@ class Login extends React.Component {
   }
   render() {
     return (
-      <div>
-        <br />
-        <br />
-        <br />
-        <br />
+      <div id="mainlog">
         <Row>
           <Col
             className="rounded"
@@ -40,16 +36,13 @@ class Login extends React.Component {
                 </Col>
               </Form.Group>
               <Button variant="danger" type="submit">
-                <br />
                 Se connecter
               </Button>
+              <br />
+              <br />
             </Form>
-            <br />
-            <br />
           </Col>
         </Row>
-        <br />
-        <br />
       </div>
     );
   }

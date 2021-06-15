@@ -1,5 +1,5 @@
 import Logo from "../Me.png";
-import { Navbar, Row, Col, Nav } from "react-bootstrap";
+import { Navbar, Row, Col, Nav, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import "./Header.css";
 
@@ -25,7 +25,15 @@ function Header() {
               &nbsp;
             </Nav>
             <Nav className="ml-auto">
-              <Link to="/compte"> Login </Link>
+              <Button
+                variant="dark"
+                as="Link"
+                to="/compte"
+                style={{ color: "white" }}
+              >
+                {" "}
+                Login{" "}
+              </Button>
             </Nav>
           </Navbar.Collapse>
         </Navbar>
