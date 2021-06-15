@@ -7,10 +7,11 @@ import "./App.css";
 import { Route, Switch } from "react-router-dom";
 import { Container } from "react-bootstrap";
 import Topic from "./Topic/Topic";
+import Compte from "./Login & compte/compte";
 
 function App() {
   return (
-    <div>
+    <div id="main">
       <Header />
       <Container fluid>
         <Switch>
@@ -19,6 +20,9 @@ function App() {
           </Route>
           <Route path="/topic/:topid">
             <Topic />
+          </Route>
+          <Route path="/compte">
+            <Compte />
           </Route>
           <Route path="/">
             <Home />

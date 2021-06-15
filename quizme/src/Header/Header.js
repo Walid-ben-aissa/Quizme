@@ -5,33 +5,32 @@ import "./Header.css";
 
 function Header() {
   return (
-    <div>
-      <Navbar bg="light" variant="light" expand="lg">
-        <Row>
-          <Col
-            xs={{ span: 3, offset: 2 }}
-            sm={{ span: 4, offset: 2 }}
-            lg={{ span: 2, offset: 2 }}
-          >
-            <Link to="/">
-              <img alt="" src={Logo} className="logo" />
-            </Link>
-          </Col>
-          <Col lg={{ offset: 5 }}>
-            <Navbar.Toggle aria-controls="basic-navbar-nav" />
-            <Navbar.Collapse id="basic-navbar-nav">
-              <Nav className="me-auto">
-                <Link to="/categories">
-                  <br />
-                  <br />
-                  Leaderboards
-                </Link>
-              </Nav>
-            </Navbar.Collapse>
-          </Col>
-        </Row>
-      </Navbar>
-    </div>
+    <Row className="navbar">
+      <Col xs={{ span: 3 }} sm={{ span: 4 }} lg={1}>
+        <Link to="/">
+          <img alt="" src={Logo} className="logo" />
+        </Link>
+      </Col>
+      <Col xs={{ offset: 1 }}>
+        <Navbar
+          className="container-fluid justify-content-end"
+          bg="light"
+          variant="light"
+          expand="lg"
+        >
+          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <Navbar.Collapse className="" id="basic-navbar-nav test">
+            <Nav className="ml-auto">
+              <Link to="/categories"> Leaderboards </Link>
+              &nbsp;
+            </Nav>
+            <Nav className="ml-auto">
+              <Link to="/compte"> Login </Link>
+            </Nav>
+          </Navbar.Collapse>
+        </Navbar>
+      </Col>
+    </Row>
   );
 }
 
