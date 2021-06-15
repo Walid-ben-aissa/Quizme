@@ -7,7 +7,8 @@ import "./App.css";
 import { Route, Switch } from "react-router-dom";
 import { Container } from "react-bootstrap";
 import Topic from "./Topic/Topic";
-import Authentificateur from "./Login & signup/log&sig";
+import Login from "./Login/login";
+import Signup from "./Signup/Signup";
 
 function App() {
   return (
@@ -22,7 +23,8 @@ function App() {
             <Topic />
           </Route>
           <Route path="/compte">
-            <Authentificateur login={false} />
+            {false && <Login />}
+            {true && <Signup />}
           </Route>
           <Route path="/">
             <Home />
