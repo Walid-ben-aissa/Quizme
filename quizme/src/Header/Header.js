@@ -25,15 +25,9 @@ function Header() {
               &nbsp;
             </Nav>
             <Nav className="ml-auto">
-              <Button
-                variant="dark"
-                as="Link"
-                to="/compte"
-                style={{ color: "white" }}
-              >
-                {" "}
-                Login{" "}
-              </Button>
+              <Link to="/compte" style={{ color: "" }}>
+                Login
+              </Link>
             </Nav>
           </Navbar.Collapse>
         </Navbar>
