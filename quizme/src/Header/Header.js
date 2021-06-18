@@ -6,7 +6,7 @@ import "./Header.css";
 function Header() {
   return (
     <Row id="navbar">
-      <Col xs={{ span: 3 }} sm={{ span: 4 }} lg={1}>
+      <Col xs={{ span: 3 }} sm={{ span: 3 }} lg={1}>
         <Link to="/">
           <img alt="" src={Logo} className="logo" />
         </Link>

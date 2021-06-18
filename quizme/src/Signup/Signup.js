@@ -15,12 +15,12 @@ function ToggleButtonExample(props) {
   const [radioValue, setRadioValue] = useState("1");
 
   const radios = [
-    { name: { img1 }, value: "1" },
-    { name: { img2 }, value: "2" },
-    { name: { img3 }, value: "3" },
-    { name: { img4 }, value: "4" },
-    { name: { img5 }, value: "5" },
-    { name: { img6 }, value: "6" },
+    { img: { img1 }, value: "1" },
+    { img: { img2 }, value: "2" },
+    { img: { img3 }, value: "3" },
+    { img: { img4 }, value: "4" },
+    { img: { img5 }, value: "5" },
+    { img: { img6 }, value: "6" },
   ];
   return (
     <>
@@ -42,7 +42,7 @@ function ToggleButtonExample(props) {
                   props.callback(radioValue);
                 }}
               >
-                <img src={Object.values(radio.name)} alt="av" className="img" />
+                <img src={Object.values(radio.img)} alt="av" className="img" />
               </ToggleButton>
             ))}
           </ButtonGroup>
