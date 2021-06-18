@@ -1,11 +1,11 @@
 import Logo from "../Me.png";
-import { Navbar, Row, Col, Nav, Button } from "react-bootstrap";
+import { Navbar, Row, Col, Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import "./Header.css";
 
 function Header() {
   return (
-    <Row className="navbar">
+    <Row id="navbar">
       <Col xs={{ span: 3 }} sm={{ span: 4 }} lg={1}>
         <Link to="/">
           <img alt="" src={Logo} className="logo" />
@@ -19,14 +19,20 @@ function Header() {
           expand="lg"
         >
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse className="" id="basic-navbar-nav test">
+          <Navbar.Collapse
+            style={{ textAlign: "center" }}
+            className=""
+            id="basic-navbar-nav test"
+          >
             <Nav className="ml-auto">
-              <Link to="/categories"> Leaderboards </Link>
+              <Link to="/categories" id="link">
+                &nbsp;Leaderboards&nbsp;
+              </Link>
               &nbsp;
             </Nav>
-            <Nav className="ml-auto">
-              <Link to="/compte" style={{ color: "" }}>
-                Login
+            <Nav className="">
+              <Link to="/compte" id="link">
+                &nbsp;Login&nbsp;
               </Link>
             </Nav>
           </Navbar.Collapse>

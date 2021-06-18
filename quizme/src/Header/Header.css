@@ -2,8 +2,19 @@
   width: 150%;
   margin-left: 0%;
 }
-.navbar {
+#navbar {
   background-color: #f8f9fa;
   margin-left: 0 !important;
   margin-right: 0 !important;
+}
+#link:link {
+  text-decoration: none;
+}
+#link:hover {
+  filter: invert(100%);
+}
+#link {
+  color: white;
+  background-color: black;
+  border-radius: 10%;
 }

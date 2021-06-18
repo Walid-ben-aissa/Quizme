@@ -72,13 +72,13 @@ class Signup extends React.Component {
           <Col
             className="rounded"
             style={{ backgroundColor: "#f8f9fa" }}
-            xs={{ offset: 2, span: 8 }}
+            lg={{ offset: 2, span: 8 }}
+            xs={{ offset: 1, span: 10 }}
           >
-            <h1 className="title text-dark" style={{ fontSize: "500%" }}>
+            <h1 className="title text-dark" style={{ fontSize: "8vw" }}>
               Créer un compte
             </h1>
             <br />
-
             <Form>
               Choisir un avatar:
               <ToggleButtonExample callback={this.handleclick} />
@@ -87,7 +87,7 @@ class Signup extends React.Component {
                 <Form.Control type="text" />
               </Form.Group>
               <Form.Group>
-                <Form.Label>Prenom</Form.Label>
+                <Form.Label>Prénom</Form.Label>
                 <Form.Control type="text" />
               </Form.Group>
               <Form.Group controlId="formBasicEmail">

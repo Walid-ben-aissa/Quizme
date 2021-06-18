@@ -9,6 +9,7 @@ import { Container } from "react-bootstrap";
 import Topic from "./Topic/Topic";
 import Login from "./Login/login";
 import Signup from "./Signup/Signup";
+import Footer from "./Footer/Footer";
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
           </Route>
         </Switch>
       </Container>
+      <Footer />
     </div>
   );
 }
