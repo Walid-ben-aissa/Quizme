@@ -21,13 +21,11 @@ app.add_middleware(
 )
 
 
-@app.post("/translate")
+""" @app.post("/translate")
 async def translate(request: Request):
     body = json.loads(await request.body())
     translations = translator.translate(
         body["req"], dest="fr")
     data = []
-    """ for rep in translations:
-        data.append(rep.text) """
-    print(translations)
-    return data
+    print(translations.text)
+    return translations.text """
