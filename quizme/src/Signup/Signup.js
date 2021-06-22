@@ -10,6 +10,7 @@ import img6 from "./avatar6.png";
 import ToggleButton from "react-bootstrap/ToggleButton";
 import { ButtonGroup } from "react-bootstrap";
 import { useState } from "react";
+import "./signup.css";
 
 function ToggleButtonExample(props) {
   const [radioValue, setRadioValue] = useState("1");
@@ -26,9 +27,9 @@ function ToggleButtonExample(props) {
     <>
       <br />
       <Row>
-        <Col>
-          <ButtonGroup className="mb-2">
-            {radios.map((radio, idx) => (
+        <ButtonGroup className="mb-2">
+          {radios.map((radio, idx) => (
+            <Col>
               <ToggleButton
                 key={idx}
                 id={`radio-${idx}`}
@@ -39,14 +40,14 @@ function ToggleButtonExample(props) {
                 checked={radioValue === radio.value}
                 onChange={(e) => {
                   setRadioValue(e.currentTarget.value);
-                  props.callback(radioValue);
+                  props.callback(e.currentTarget.value);
                 }}
               >
                 <img src={Object.values(radio.img)} alt="av" className="img" />
               </ToggleButton>
-            ))}
-          </ButtonGroup>
-        </Col>
+            </Col>
+          ))}
+        </ButtonGroup>
       </Row>
       <br />
     </>
@@ -56,10 +57,29 @@ function ToggleButtonExample(props) {
 class Signup extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { activated: 0 };
+    this.state = { activated: 1 };
   }
   handleclick = (id) => {
     this.setState({ activated: id });
+  };
+  handleinput = (e) => {
+    const target = e.target;
+    const value = target.value;
+    const id = target.id;
+    console.log(target, value, id);
+    this.setState({ [id]: value });
+  };
+  handlesubmit = (e) => {
+    let body = `{"name":"${this.state.name}","surname":"${this.state.surname}","mail":"${this.state.mail}","pass":"${this.state.password}","avatar":${this.state.activated}}`;
+    fetch("http://127.0.0.1:8000/createacc", {
+      method: "POST",
+      body: body,
+    }).then((rep) => {
+      rep.json().then((data) => {
+        console.log(data);
+      });
+    });
+    e.preventDefault();
   };
   render() {
     return (
@@ -76,36 +96,61 @@ class Signup extends React.Component {
             xs={{ offset: 1, span: 10 }}
           >
             <h1 className="title text-dark" style={{ fontSize: "8vw" }}>
-              Créer un compte
+              Create an account
             </h1>
             <br />
-            <Form>
-              Choisir un avatar:
+            <Form onSubmit={this.handlesubmit}>
+              Choose an Avatar:
               <ToggleButtonExample callback={this.handleclick} />
               <Form.Group>
-                <Form.Label>Nom</Form.Label>
-                <Form.Control type="text" />
+                <Form.Label>Name</Form.Label>
+                <Form.Control
+                  type="text"
+                  id="name"
+                  required
+                  onChange={this.handleinput}
+                />
               </Form.Group>
               <Form.Group>
-                <Form.Label>Prénom</Form.Label>
-                <Form.Control type="text" />
+                <Form.Label>Surname</Form.Label>
+                <Form.Control
+                  type="text"
+                  id="surname"
+                  required
+                  onChange={this.handleinput}
+                />
               </Form.Group>
-              <Form.Group controlId="formBasicEmail">
-                <Form.Label>Adresse E-Mail</Form.Label>
-                <Form.Control type="email" />
+              <Form.Group>
+                <Form.Label>E-mail adress</Form.Label>
+                <Form.Control
+                  type="email"
+                  id="mail"
+                  required
+                  onChange={this.handleinput}
+                />
               </Form.Group>
-              <Form.Group controlId="formBasicPassword">
-                <Form.Label>Mot de passe</Form.Label>
-                <Form.Control type="password" />
+              <Form.Group>
+                <Form.Label>Password</Form.Label>
+                <Form.Control
+                  type="password"
+                  id="password"
+                  required
+                  onChange={this.handleinput}
+                />
               </Form.Group>
-              <Form.Group controlId="formBasicPasswordConf">
-                <Form.Label>Confirmer mot de passe</Form.Label>
-                <Form.Control type="password" />
+              <Form.Group>
+                <Form.Label>Confirm Password</Form.Label>
+                <Form.Control
+                  type="password"
+                  id="cnfpassword"
+                  required
+                  onChange={this.handleinput}
+                />
               </Form.Group>
               <br />
               <div id="sub">
                 <Button variant="danger" type="submit">
-                  Créer un compte
+                  Create account
                 </Button>
               </div>
             </Form>

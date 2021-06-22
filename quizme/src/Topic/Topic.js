@@ -67,10 +67,12 @@ class Topic extends React.Component {
     ReactDOM.render(
       <>
         <Row>
-          <Col lg={2} xs={12}>
+          <Col lg={3} xs={12}>
             Score :{this.state.score}
           </Col>
-          <Col lg={{ span: 1, offset: 9 }}>{Math.round(timer.time / 1000)}</Col>
+          <Col lg={{ span: 1, offset: 11 }}>
+            {Math.round(timer.time / 1000)}
+          </Col>
         </Row>
       </>,
       document.getElementById("time")
@@ -189,10 +191,10 @@ class Topic extends React.Component {
         ReactDOM.render(
           <>
             <Row>
-              <Col lg={2} xs={12}>
+              <Col lg={3} xs={12}>
                 Score :{this.state.score}
               </Col>
-              <Col lg={{ span: 1, offset: 9 }}>
+              <Col lg={{ span: 1, offset: 11 }}>
                 {Math.round(timer.time / 1000)}
               </Col>
             </Row>
@@ -203,7 +205,7 @@ class Topic extends React.Component {
     } else {
       this.setState({ complete: true });
       ReactDOM.render(
-        <div id="success">Votre score est {this.state.score}</div>,
+        <div id="success">Your score is {this.state.score}</div>,
         document.getElementById("bod")
       );
       console.log(this.state.score);

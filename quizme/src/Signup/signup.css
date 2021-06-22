@@ -1,9 +1,16 @@
 #form {
   text-align: center;
 }
+@media only screen and (max-width: 730px) {
+  .img {
+    width: 200%;
+    background-color: cyan;
+  }
+}
 .img {
   width: 90%;
   align-content: center;
+  overflow-x: scroll;
 }
 h1 {
   font-family: "Helvetica";
