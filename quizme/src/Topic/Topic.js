@@ -1,8 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./Topic.css";
-import { Card, Button } from "react-bootstrap";
-import Timer from "react-compound-timer";
+import { Card, Button, Col, Row } from "react-bootstrap";
+import Timer from "tiny-timer";
+const timer = new Timer();
 
 function decode(html) {
   let txt = document.createElement("textarea");
@@ -38,35 +39,43 @@ class Topic extends React.Component {
       f: 0,
       done: false,
       complete: false,
-      count: 0,
       score: 0,
       type: "",
     };
   }
-  handlechange = (x) => {
-    this.setState({ z: (x / 1000).toFixed(2) });
-    console.log(Math.trunc(x / 1000));
-    if (Math.trunc(x / 1000) < 0.00001 && !this.state.complete) {
-      ReactDOM.render(
-        <div id="erreur" style={{ textAlign: "center" }}>
-          Le temps a ecoulé <br />
-          <Button
-            variant="secondary"
-            onClick={() => {
-              window.location.reload(true);
-            }}
-          >
-            Reéssayer?
-          </Button>
-        </div>,
-        document.getElementById("bod")
-      );
-    }
+  handlechange = () => {
+    ReactDOM.render(
+      <div id="erreur" style={{ textAlign: "center" }}>
+        Le temps a ecoulé <br />
+        <Button
+          variant="secondary"
+          onClick={() => {
+            window.location.reload(true);
+          }}
+        >
+          Reéssayer?
+        </Button>
+      </div>,
+      document.getElementById("bod")
+    );
   };
   componentDidMount() {
     let id = window.location.pathname.slice(
       window.location.pathname.indexOf("/", 1) + 1
     );
+    timer.start(20000);
+    ReactDOM.render(
+      <>
+        <Row>
+          <Col lg={2} xs={12}>
+            Score :{this.state.score}
+          </Col>
+          <Col lg={{ span: 1, offset: 9 }}>{Math.round(timer.time / 1000)}</Col>
+        </Row>
+      </>,
+      document.getElementById("time")
+    );
+    timer.stop();
     console.log(id);
     fetch("https://opentdb.com/api.php?amount=8&difficulty=easy&category=" + id)
       .then((response) => response.json())
@@ -87,12 +96,14 @@ class Topic extends React.Component {
         document.getElementById("incorrect3").style.backgroundColor = "#6c757d";
       }
       this.setState({ done: false });
-      console.log("aa");
       this.test();
     }
   };
-  verify = (id, typ) => {
-    console.log(this.state.score, id);
+  verify = (id, typ, x) => {
+    console.log("x ", Math.round(x / 10));
+    console.log("Score :", this.state.score, id);
+    timer.stop();
+    console.log(timer.time);
     if (!this.state.done) {
       document.getElementById("correct").style.backgroundColor = "green";
       document.getElementById("incorrect1").style.backgroundColor = "red";
@@ -105,14 +116,12 @@ class Topic extends React.Component {
         done: true,
         type: typ,
       });
-      if (id === "correct")
+      if (id === "correct") {
         this.setState({
-          score: Number(this.state.score) + Number(this.state.z),
+          score: this.state.score + Math.round(x / 10),
         });
+      }
     }
-  };
-  callback = (x) => {
-    x();
   };
   test = () => {
     if (this.state.f < 8) {
@@ -120,6 +129,7 @@ class Topic extends React.Component {
       let quest = decode(slide["question"]);
       let canswers;
       let incanswers;
+      let x = 0;
       canswers = unescape(decode(slide["correct_answer"]));
       incanswers = slide["incorrect_answers"].map((word) => decode(word));
       /* let body =`{"req": "` + quest + `","correct": "` + canswers +`","incorrect": "` + incanswers + `" }`;
@@ -132,7 +142,7 @@ class Topic extends React.Component {
       let buttons = [
         <Button
           id="correct"
-          onClick={() => this.verify("correct", slide["type"])}
+          onClick={() => this.verify("correct", slide["type"], x)}
           variant="secondary"
           className="answers"
         >
@@ -140,7 +150,7 @@ class Topic extends React.Component {
         </Button>,
         <Button
           id="incorrect1"
-          onClick={() => this.verify("incorrect", slide["type"])}
+          onClick={() => this.verify("incorrect", slide["type"], x)}
           variant="secondary"
           className="answers"
         >
@@ -151,7 +161,7 @@ class Topic extends React.Component {
         buttons.push(
           <Button
             id="incorrect2"
-            onClick={() => this.verify("incorrect", slide["type"])}
+            onClick={() => this.verify("incorrect", slide["type"], x)}
             variant="secondary"
             className="answers"
           >
@@ -159,7 +169,7 @@ class Topic extends React.Component {
           </Button>,
           <Button
             id="incorrect3"
-            onClick={() => this.verify("incorrect", slide["type"])}
+            onClick={() => this.verify("incorrect", slide["type"], x)}
             variant="secondary"
             className="answers"
           >
@@ -167,30 +177,29 @@ class Topic extends React.Component {
           </Button>
         );
       }
+      timer.on("done", () => this.verify("", slide["type"]));
       buttons = shuffle(buttons);
       this.setState({ f: this.state.f + 1 });
       document.getElementById("title").innerHTML = quest;
       document.getElementById("nextB").style.display = "none";
+      timer.start(20000);
       ReactDOM.render(<>{buttons}</>, document.getElementById("content"));
-      ReactDOM.render(
-        <Timer
-          initialTime={60000}
-          direction="backward"
-          startImmediately={true}
-          lastUnit="s"
-        >
-          {({ start, resume, pause, stop, reset, timerState, getTime }) => (
-            <React.Fragment>
-              <div>
-                <Timer.Seconds onChange={this.handlechange(getTime())} />
-              </div>
-              {this.callback(pause)}
-              <br />
-            </React.Fragment>
-          )}
-        </Timer>,
-        document.getElementById("time")
-      );
+      timer.on("tick", () => {
+        x = timer.time;
+        ReactDOM.render(
+          <>
+            <Row>
+              <Col lg={2} xs={12}>
+                Score :{this.state.score}
+              </Col>
+              <Col lg={{ span: 1, offset: 9 }}>
+                {Math.round(timer.time / 1000)}
+              </Col>
+            </Row>
+          </>,
+          document.getElementById("time")
+        );
+      });
     } else {
       this.setState({ complete: true });
       ReactDOM.render(
@@ -206,10 +215,13 @@ class Topic extends React.Component {
         <Card id="question" border="secondary">
           <Card.Header>{this.state.y}</Card.Header>
           <Card.Body id="bod">
-            <Card.Header id="time"></Card.Header>
-            <Card.Title id="title">{}</Card.Title>
+            <Card.Title id="time"></Card.Title>
+            <Col>
+              <Card.Title id="title"></Card.Title>
+            </Col>
             <Card.Text id="content">
               <Button
+                id="start"
                 onClick={this.test}
                 variant="success"
                 style={{ width: "75%" }}
@@ -223,12 +235,12 @@ class Topic extends React.Component {
               id="nextB"
               style={{ width: "100%", display: "none" }}
               onClick={this.reset}
+              variant="success"
             >
               Next
             </Button>
           </Card.Footer>
         </Card>
-        <Button onClick={() => this.callback}> hey </Button>
       </>
     );
   }

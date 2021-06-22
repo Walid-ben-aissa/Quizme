@@ -9,6 +9,7 @@
 }
 #content {
   text-align: center;
+  padding: 10%;
 }
 #correct:focus {
   outline: none;
@@ -29,18 +30,17 @@
 #next {
   text-align: center;
 }
-#nextB {
+/* #nextB {
   background-color: gray;
   border-color: gray;
   outline-color: gray;
-}
+} */
 #nextB:focus {
   box-shadow: none;
 }
 #time {
   font-weight: 700;
   font-size: 200%;
-  text-align: right;
   padding: 0;
 }
 #erreur {
@@ -53,4 +53,8 @@
   color: green;
   font-weight: 500;
   text-align: center;
+}
+#title {
+  text-align: center;
+  font-size: 2rem;
 }
