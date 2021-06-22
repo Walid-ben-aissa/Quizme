@@ -125,6 +125,9 @@ class Topic extends React.Component {
       }
     }
   };
+  componentWillUnmount() {
+    timer.stop();
+  }
   test = () => {
     if (this.state.f < 8) {
       let slide = this.state.x[this.state.f];
