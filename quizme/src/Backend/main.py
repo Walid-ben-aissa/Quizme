@@ -23,7 +23,6 @@ async def account(request: Request):
     body = json.loads(await request.body())
     cursor.execute(f"SELECT * FROM account WHERE email='{body['mail']}'")
     res = cursor.fetchall()
-    print(len(res))
     if(len(res) == 0):
         cursor.execute(
             f"INSERT INTO `account` (`id_account`, `name`, `surname`, `password`, `email`, `avatar`) VALUES(NULL,'{body['name']}','{body['surname']}','{body['pass']}','{body['mail']}','{body['avatar']}');")
@@ -32,3 +31,23 @@ async def account(request: Request):
     else:
         data = "Failed"
     return data
+
+
+@app.post("/signin")
+async def sign(request: Request):
+    mydb = mysql.connector.connect(
+        host="localhost", user="root", database="quizme")
+    cursor = mydb.cursor()
+    body = json.loads(await request.body())
+    cursor.execute(
+        f"SELECT * FROM account WHERE email='{body['mail']}' AND password ='{body['pass']}'")
+    result = cursor.fetchall()
+    row_headers = [x[0] for x in cursor.description]
+    data = []
+    for res in result:
+        data.append(dict(zip(row_headers, res)))
+    if(len(result) == 0):
+        return "Failed"
+    else:
+        print(data)
+        return data

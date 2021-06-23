@@ -38,7 +38,7 @@ class Home extends React.Component {
     return (
       <div>
         <br />
-        <h1 className="title display-1 text-light">Choisir un Quiz!</h1>
+        <h1 className="title display-1 text-light">Choose a category!</h1>
         <br />
         <Row>
           <Col xs={{ span: 6, offset: 3 }}>

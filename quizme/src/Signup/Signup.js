@@ -10,6 +10,7 @@ import img6 from "./avatar6.png";
 import ToggleButton from "react-bootstrap/ToggleButton";
 import { ButtonGroup } from "react-bootstrap";
 import { useState } from "react";
+import { Redirect } from "react-router";
 import "./signup.css";
 
 function ToggleButtonExample(props) {
@@ -57,7 +58,7 @@ function ToggleButtonExample(props) {
 class Signup extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { activated: 1 };
+    this.state = { activated: 1, redirect: false };
   }
   handleclick = (id) => {
     this.setState({ activated: id });
@@ -70,6 +71,7 @@ class Signup extends React.Component {
     this.setState({ [id]: value });
   };
   handlesubmit = (e) => {
+    e.preventDefault();
     let body = `{"name":"${this.state.name}","surname":"${this.state.surname}","mail":"${this.state.mail}","pass":"${this.state.password}","avatar":${this.state.activated}}`;
     fetch("http://127.0.0.1:8000/createacc", {
       method: "POST",
@@ -77,9 +79,9 @@ class Signup extends React.Component {
     }).then((rep) => {
       rep.json().then((data) => {
         console.log(data);
+        this.setState({ redirect: true });
       });
     });
-    e.preventDefault();
   };
   render() {
     return (
@@ -95,7 +97,7 @@ class Signup extends React.Component {
             lg={{ offset: 2, span: 8 }}
             xs={{ offset: 1, span: 10 }}
           >
-            <h1 className="title text-dark" style={{ fontSize: "8vw" }}>
+            <h1 className="title text-dark" style={{ fontSize: "400%" }}>
               Create an account
             </h1>
             <br />
@@ -159,6 +161,7 @@ class Signup extends React.Component {
         </Row>
         <br />
         <br />
+        {this.state.redirect && <Redirect to="/" />}
       </div>
     );
   }

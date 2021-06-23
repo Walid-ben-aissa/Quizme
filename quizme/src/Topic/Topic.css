@@ -58,3 +58,9 @@
   text-align: center;
   font-size: 2rem;
 }
+#notlog {
+  text-align: center !important;
+  font-size: 300%;
+  padding: 10%;
+  margin: 10%;
+}

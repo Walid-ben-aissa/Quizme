@@ -2,12 +2,12 @@ import React from "react";
 /* import Counter from "./Timer/Timer"; */
 import Header from "./Header/Header";
 import Home from "./Home/Home";
-import Categories from "./Categories/Categories";
+import Leaderboards from "./Leaderboards/Leaderboards";
 import "./App.css";
 import { Route, Switch } from "react-router-dom";
 import { Container } from "react-bootstrap";
 import Topic from "./Topic/Topic";
-import Login from "./Login/login";
+import Signin from "./Signin/Signin";
 import Signup from "./Signup/Signup";
 import Footer from "./Footer/Footer";
 
@@ -17,15 +17,17 @@ function App() {
       <Header />
       <Container fluid>
         <Switch>
-          <Route path="/categories">
-            <Categories />
+          <Route path="/leaderboards">
+            <Leaderboards />
           </Route>
           <Route path="/topic/:topid">
             <Topic />
           </Route>
-          <Route path="/compte">
-            {false && <Login />}
-            {true && <Signup />}
+          <Route path="/signin">
+            <Signin />
+          </Route>
+          <Route path="/signup">
+            <Signup />
           </Route>
           <Route path="/">
             <Home />

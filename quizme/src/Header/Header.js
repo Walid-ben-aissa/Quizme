@@ -1,9 +1,14 @@
 import Logo from "../Me.png";
 import { Navbar, Row, Col, Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
 import "./Header.css";
 
 function Header() {
+  const [logged, setLogged] = useState(false);
+  useEffect(() => {
+    if (sessionStorage["mail"] === undefined) setLogged(true);
+  }, []);
   return (
     <Row id="navbar">
       <Col xs={{ span: 3 }} sm={{ span: 3 }} lg={1}>
@@ -25,16 +30,40 @@ function Header() {
             id="basic-navbar-nav test"
           >
             <Nav className="ml-auto">
-              <Link to="/categories" id="link">
+              <Link to="/leaderboards" className="btn" id="link">
                 &nbsp;Leaderboards&nbsp;
               </Link>
               &nbsp;
             </Nav>
-            <Nav className="">
-              <Link to="/compte" id="link">
-                &nbsp;Login&nbsp;
-              </Link>
-            </Nav>
+
+            {logged && (
+              <>
+                <Nav className="">
+                  <Link to="/signin" className="btn" id="link">
+                    &nbsp;SingIn&nbsp;
+                  </Link>
+                  &nbsp;
+                </Nav>
+                <Nav className="">
+                  <Link to="/signup" className="btn" id="link">
+                    &nbsp;Signup&nbsp;
+                  </Link>
+                </Nav>
+              </>
+            )}
+            {!logged && (
+              <Nav
+                id="link"
+                className="btn"
+                onClick={() => {
+                  setLogged(false);
+                  sessionStorage.clear();
+                  window.location.reload();
+                }}
+              >
+                &nbsp; Log out&nbsp;
+              </Nav>
+            )}
           </Navbar.Collapse>
         </Navbar>
       </Col>

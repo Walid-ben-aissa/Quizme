@@ -1,8 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./Topic.css";
-import { Card, Button, Col, Row } from "react-bootstrap";
+import { Card, Button, Col, Row, Nav } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import Timer from "tiny-timer";
+
 const timer = new Timer();
 
 function decode(html) {
@@ -47,47 +49,57 @@ class Topic extends React.Component {
     ReactDOM.render(
       <div id="erreur" style={{ textAlign: "center" }}>
         Le temps a ecoulé <br />
-        <Button
-          variant="secondary"
-          onClick={() => {
-            window.location.reload(true);
-          }}
-        >
-          Reéssayer?
-        </Button>
       </div>,
       document.getElementById("bod")
     );
   };
   componentDidMount() {
-    let id = window.location.pathname.slice(
-      window.location.pathname.indexOf("/", 1) + 1
-    );
-    timer.start(20000);
-    ReactDOM.render(
-      <>
-        <Row>
-          <Col lg={3} xs={12}>
-            Score :{this.state.score}
-          </Col>
-          <Col lg={{ span: 1, offset: 11 }}>
-            {Math.round(timer.time / 1000)}
-          </Col>
-        </Row>
-      </>,
-      document.getElementById("time")
-    );
-    timer.stop();
-    console.log(id);
-    fetch("https://opentdb.com/api.php?amount=8&difficulty=easy&category=" + id)
-      .then((response) => response.json())
-      .then((data) => {
-        this.setState({
-          x: data["results"],
-          y: data["results"][0]["category"],
+    if (sessionStorage["mail"] !== undefined) {
+      let id = window.location.pathname.slice(
+        window.location.pathname.indexOf("/", 1) + 1
+      );
+      timer.start(20000);
+      ReactDOM.render(
+        <>
+          <Row>
+            <Col lg={3} xs={12}>
+              Score: {this.state.score}
+            </Col>
+            <Col lg={{ span: 2, offset: 10 }}>
+              Time: {Math.round(timer.time / 1000)}
+            </Col>
+          </Row>
+        </>,
+        document.getElementById("time")
+      );
+      timer.stop();
+      console.log(id);
+      fetch(
+        "https://opentdb.com/api.php?amount=8&difficulty=easy&category=" +
+          id +
+          "&token=" +
+          sessionStorage["token"]
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          if (data["response_code"] === 0) {
+            this.setState({
+              x: data["results"],
+              y: data["results"][0]["category"],
+            });
+          } else if (data["response_code"] === 4)
+            fetch(
+              "https://opentdb.com/api_token.php?command=reset&token=" +
+                sessionStorage["token"]
+            ).then((response) => {
+              response.json().then((data) => {
+                sessionStorage["token"] = data["token"];
+              });
+              window.location.reload();
+            });
+          console.log(data);
         });
-        console.log(this.state.x);
-      });
+    }
   }
   reset = (typ) => {
     if (this.state.done) {
@@ -113,7 +125,6 @@ class Topic extends React.Component {
         document.getElementById("incorrect2").style.backgroundColor = "red";
         document.getElementById("incorrect3").style.backgroundColor = "red";
       }
-      document.getElementById("nextB").style.display = "inline";
       this.setState({
         done: true,
         type: typ,
@@ -137,13 +148,6 @@ class Topic extends React.Component {
       let x = 0;
       canswers = unescape(decode(slide["correct_answer"]));
       incanswers = slide["incorrect_answers"].map((word) => decode(word));
-      /* let body =`{"req": "` + quest + `","correct": "` + canswers +`","incorrect": "` + incanswers + `" }`;
-    fetch("http://127.0.0.1:8000/translate", {
-      method: "POST",
-      body: body,
-    })
-      .then((response) => response.json())
-      .then((data) => console.log(data));*/
       let buttons = [
         <Button
           id="correct"
@@ -186,7 +190,6 @@ class Topic extends React.Component {
       buttons = shuffle(buttons);
       this.setState({ f: this.state.f + 1 });
       document.getElementById("title").innerHTML = quest;
-      document.getElementById("nextB").style.display = "none";
       timer.start(20000);
       ReactDOM.render(<>{buttons}</>, document.getElementById("content"));
       timer.on("tick", () => {
@@ -195,10 +198,10 @@ class Topic extends React.Component {
           <>
             <Row>
               <Col lg={3} xs={12}>
-                Score :{this.state.score}
+                Score: {this.state.score}
               </Col>
-              <Col lg={{ span: 1, offset: 11 }}>
-                {Math.round(timer.time / 1000)}
+              <Col lg={{ span: 2, offset: 10 }}>
+                Time: {Math.round(timer.time / 1000)}
               </Col>
             </Row>
           </>,
@@ -208,44 +211,79 @@ class Topic extends React.Component {
     } else {
       this.setState({ complete: true });
       ReactDOM.render(
-        <div id="success">Your score is {this.state.score}</div>,
+        <div id="success">
+          Your score is {this.state.score}
+          <br />
+        </div>,
         document.getElementById("bod")
       );
       console.log(this.state.score);
     }
   };
+
   render() {
     return (
       <>
-        <Card id="question" border="secondary">
-          <Card.Header>{this.state.y}</Card.Header>
-          <Card.Body id="bod">
-            <Card.Title id="time"></Card.Title>
-            <Col>
-              <Card.Title id="title"></Card.Title>
-            </Col>
-            <Card.Text id="content">
-              <Button
-                id="start"
-                onClick={this.test}
-                variant="success"
-                style={{ width: "75%" }}
-              >
-                Start
-              </Button>
-            </Card.Text>
-          </Card.Body>
-          <Card.Footer id="next">
-            <Button
-              id="nextB"
-              style={{ width: "100%", display: "none" }}
-              onClick={this.reset}
-              variant="success"
-            >
-              Next
-            </Button>
-          </Card.Footer>
-        </Card>
+        {sessionStorage["mail"] !== undefined && (
+          <Card id="question" border="secondary">
+            <Card.Header>{this.state.y}</Card.Header>
+            <Card.Body id="bod">
+              <Card.Title id="time"></Card.Title>
+              <Col>
+                <Card.Title id="title"></Card.Title>
+              </Col>
+              <Card.Text id="content">
+                <Button
+                  id="start"
+                  onClick={this.test}
+                  variant="success"
+                  style={{ width: "75%" }}
+                >
+                  Start
+                </Button>
+              </Card.Text>
+            </Card.Body>
+            <Card.Footer id="next">
+              {this.state.complete && (
+                <Button
+                  variant="secondary"
+                  style={{ width: "100%" }}
+                  onClick={() => {
+                    window.location.reload(true);
+                  }}
+                >
+                  Play again?
+                </Button>
+              )}
+
+              {this.state.done && (
+                <Button
+                  id="nextB"
+                  style={{ width: "100%" }}
+                  onClick={this.reset}
+                  variant="success"
+                >
+                  Next
+                </Button>
+              )}
+            </Card.Footer>
+          </Card>
+        )}
+        {sessionStorage["mail"] === undefined && (
+          <>
+            <br />
+            <Card id="notlog">
+              You must be signed in to take a quiz!
+              <Nav className="">
+                <Link to="/signup" className="btn" id="link">
+                  &nbsp;Signup&nbsp;
+                </Link>
+              </Nav>
+            </Card>
+
+            <br />
+          </>
+        )}
       </>
     );
   }

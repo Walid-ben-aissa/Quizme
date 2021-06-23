@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-class Categories extends React.Component {
+class Leaderboards extends React.Component {
   state = { x: "" };
   componentDidMount() {
     fetch("https://opentdb.com/api_category.php")
@@ -24,4 +24,4 @@ class Categories extends React.Component {
     return <ol style={{ color: "white" }}>{this.state.x}</ol>;
   }
 }
-export default Categories;
+export default Leaderboards;
