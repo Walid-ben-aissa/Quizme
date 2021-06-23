@@ -1,27 +1,21 @@
 import React from "react";
-import { Link } from "react-router-dom";
 
 class Leaderboards extends React.Component {
-  state = { x: "" };
+  state = {};
   componentDidMount() {
     fetch("https://opentdb.com/api_category.php")
       .then((response) => response.json())
       .then((data) => {
-        let y = data["trivia_categories"].map((element) => {
-          return (
-            <li>
-              <Link to={`/topic/${element["id"]}`} style={{ color: "white" }}>
-                {element["name"]}
-              </Link>
-            </li>
-          );
-        });
-        console.log(y);
-        this.setState({ x: y });
+        this.setState({ categories: data["trivia_categories"] });
       });
+    fetch("http://127.0.0.1:8000/getscores").then((rep) => {
+      rep.json().then((data) => {
+        for (rep of data) console.log(rep);
+      });
+    });
   }
   render() {
-    return <ol style={{ color: "white" }}>{this.state.x}</ol>;
+    return null;
   }
 }
 export default Leaderboards;

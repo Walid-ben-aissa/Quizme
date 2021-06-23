@@ -59,8 +59,22 @@
   font-size: 2rem;
 }
 #notlog {
-  text-align: center !important;
+  align-items: center;
+  text-align: center;
   font-size: 300%;
   padding: 10%;
   margin: 10%;
+}
+#sign:link {
+  text-decoration: none;
+}
+#sign:hover {
+  filter: invert(100%);
+}
+#sign {
+  cursor: pointer;
+  color: white;
+  background-color: black;
+  border-radius: 10%;
+  margin-top: 3vw;
 }

@@ -29,7 +29,7 @@ async def account(request: Request):
         mydb.commit()
         data = "Success"
     else:
-        data = "Failed"
+        data = "Fail"
     return data
 
 
@@ -51,3 +51,38 @@ async def sign(request: Request):
     else:
         print(data)
         return data
+
+
+@app.get("/addscore/{mail}/{idq}/{score}")
+def score(score, idq: int, mail: str):
+    mydb = mysql.connector.connect(
+        host="localhost", user="root", database="quizme")
+    cursor = mydb.cursor()
+    cursor.execute(f"SELECT id_account FROM account WHERE email='{mail}'")
+    ida = cursor.fetchone()
+    ida = ida[0]
+    cursor.execute(
+        f"SELECT * FROM score WHERE id_account={ida} AND id_quiz={idq}")
+    res = cursor.fetchall()
+    if(len(res) == 0):
+        cursor.execute(f"INSERT INTO score VALUES ({ida},{idq},{score})")
+        mydb.commit()
+    else:
+        cursor.execute(
+            f"UPDATE score SET score={score} WHERE id_account={ida} AND id_quiz={idq}")
+        mydb.commit()
+    return "Success"
+
+
+@app.get("/getscores")
+def gets():
+    mydb = mysql.connector.connect(
+        host="localhost", user="root", database="quizme")
+    cursor = mydb.cursor()
+    cursor.execute(f"SELECT * FROM score ORDER BY id_quiz")
+    result = cursor.fetchall()
+    row_headers = [x[0] for x in cursor.description]
+    data = []
+    for res in result:
+        data.append(dict(zip(row_headers, res)))
+    return result

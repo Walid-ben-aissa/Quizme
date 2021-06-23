@@ -79,7 +79,8 @@ class Signup extends React.Component {
     }).then((rep) => {
       rep.json().then((data) => {
         console.log(data);
-        this.setState({ redirect: true });
+        if (data === "Success") this.setState({ redirect: true });
+        else alert("An account with that email already exists!");
       });
     });
   };

@@ -218,6 +218,21 @@ class Topic extends React.Component {
         document.getElementById("bod")
       );
       console.log(this.state.score);
+      let id = window.location.pathname.slice(
+        window.location.pathname.indexOf("/", 1) + 1
+      );
+      fetch(
+        "http://127.0.0.1:8000/addscore/" +
+          sessionStorage["mail"] +
+          "/" +
+          id +
+          "/" +
+          this.state.score
+      ).then((rep) => {
+        rep.json().then((data) => {
+          console.log(data);
+        });
+      });
     }
   };
 
@@ -275,7 +290,7 @@ class Topic extends React.Component {
             <Card id="notlog">
               You must be signed in to take a quiz!
               <Nav className="">
-                <Link to="/signup" className="btn" id="link">
+                <Link to="/signup" className="btn" id="sign">
                   &nbsp;Signup&nbsp;
                 </Link>
               </Nav>
