@@ -290,8 +290,8 @@ class Topic extends React.Component {
             <Card id="notlog">
               You must be signed in to take a quiz!
               <Nav className="">
-                <Link to="/signup" className="btn" id="sign">
-                  &nbsp;Signup&nbsp;
+                <Link to="/signin" className="btn" id="sign">
+                  &nbsp;Signin&nbsp;
                 </Link>
               </Nav>
             </Card>
