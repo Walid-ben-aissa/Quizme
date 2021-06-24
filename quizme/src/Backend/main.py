@@ -79,10 +79,11 @@ def gets():
     mydb = mysql.connector.connect(
         host="localhost", user="root", database="quizme")
     cursor = mydb.cursor()
-    cursor.execute(f"SELECT * FROM score ORDER BY id_quiz")
+    cursor.execute(f"SELECT * FROM score ORDER by id_quiz")
     result = cursor.fetchall()
     row_headers = [x[0] for x in cursor.description]
     data = []
+    print(result)
     for res in result:
         data.append(dict(zip(row_headers, res)))
-    return result
+    return data

@@ -16,6 +16,8 @@ class Home extends React.Component {
     fetch("https://opentdb.com/api_category.php")
       .then((response) => response.json())
       .then((data) => {
+        localStorage["categories"] = JSON.stringify(data["trivia_categories"]);
+        console.log(data["trivia_categories"]);
         let y = data["trivia_categories"].map((element, idx) => {
           return (
             <div>
@@ -30,7 +32,6 @@ class Home extends React.Component {
             </div>
           );
         });
-        console.log(y);
         this.setState({ x: y });
       });
   }
