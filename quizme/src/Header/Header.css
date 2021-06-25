@@ -13,6 +13,9 @@
 #link:hover {
   filter: invert(100%);
 }
+#link:focus {
+  box-shadow: none;
+}
 #link {
   cursor: pointer;
   color: white;

@@ -1,10 +1,10 @@
 .title {
   text-align: center;
 }
-.link {
+.linktop {
   color: black;
 }
-.link:hover {
+.linktop:hover {
   text-decoration: none;
   color: black;
 }
@@ -13,4 +13,12 @@
 }
 #deck {
   align-content: center;
+}
+#choice {
+  text-align: center;
+  font-size: 400%;
+  color: white;
+  -webkit-text-stroke-color: black;
+  -webkit-text-stroke-width: 1px;
+  margin-bottom: 3%;
 }

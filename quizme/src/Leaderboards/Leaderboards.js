@@ -1,46 +1,75 @@
 import React from "react";
-import { CardColumns, Card, Row, Col, Image } from "react-bootstrap";
+import { Card, Col } from "react-bootstrap";
+import Accordion from "react-bootstrap/Accordion";
+import "./Leaderboards.css";
 
-function getid(x, cat) {
-  for (let i of cat) if (i["id"] === x) console.log(i);
+function getid(cat, x) {
+  for (let i of cat) {
+    if (i["id"] === x) return i["name"];
+  }
 }
 class Leaderboards extends React.Component {
-  state = { x: <></> };
+  state = { x: true, show1: false, show2: true };
   componentDidMount() {
     fetch("http://127.0.0.1:8000/getscores").then((rep) => {
       rep.json().then((data) => {
-        let scores = {};
-        for (let idx of data) {
-          scores[idx["id_quiz"]] = [
-            ...(scores[idx["id_quiz"]] || []),
-            [{ id_account: idx["id_account"] }, { score: idx["score"] }],
-          ];
-        }
-        var cat = JSON.parse(localStorage["categories"]);
-        let x = [];
-        for (let idx in scores) {
-          let y = scores[idx].map((element, id) => {
-            console.log(scores);
-            return (
-              <Card key={id} className="button">
-                <Card.Body>
-                  <Card.Title>{}</Card.Title>
-                  <Card.Title>{element[0]["id_account"]}</Card.Title>
-                  <Card.Text>{element[1]["score"]}</Card.Text>
-                </Card.Body>
-              </Card>
+        if (data !== "nothing") {
+          let scores = {};
+          for (let idx of data) {
+            scores[idx["id_quiz"]] = [
+              ...(scores[idx["id_quiz"]] || []),
+              [
+                { name: idx["name"] },
+                { surname: idx["surname"] },
+                { score: idx["score"] },
+              ],
+            ];
+          }
+          var cat = JSON.parse(localStorage["categories"]);
+          let x = [];
+
+          for (let idx in scores) {
+            let y = scores[idx].map((element, id) => {
+              return (
+                <Col lg={{ span: 8, offset: 2 }}>
+                  <Accordion.Collapse eventKey={idx}>
+                    <Card key={id} className="cards">
+                      <Card.Body>
+                        <Card.Title>
+                          {element[0]["name"] + " " + element[1]["surname"]}
+                        </Card.Title>
+                        <Card.Text>{element[2]["score"]}</Card.Text>
+                      </Card.Body>
+                    </Card>
+                  </Accordion.Collapse>
+                </Col>
+              );
+            });
+            x.push(
+              <div id={idx}>
+                <h1 className="headers">
+                  <Accordion.Toggle eventKey={idx} as="h1">
+                    {getid(cat, parseInt(idx)) + " quiz scores "}
+                  </Accordion.Toggle>
+                </h1>
+                {y}
+              </div>
             );
-          });
-          x.push(y);
+          }
+          console.log(x);
+          this.setState({ x: <>{x}</>, show1: true, show2: false });
         }
-        console.log(x);
-        this.setState({ x: <>{x}</> });
       });
     });
   }
   render() {
-    return <>{this.state.x}</>;
+    console.log(this.state.show2);
+    return (
+      <>
+        {this.state.show1 && <Accordion id="board">{this.state.x}</Accordion>}
+        {this.state.show2 && <h1 id="empty">No scores to show 🙁</h1>}
+      </>
+    );
   }
 }
 export default Leaderboards;
-/* */

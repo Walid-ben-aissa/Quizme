@@ -31,7 +31,13 @@ function Header() {
           >
             <Nav className="ml-auto">
               <Link to="/leaderboards" className="btn" id="link">
-                &nbsp;Leaderboards&nbsp;
+                &nbsp;Leaderboard&nbsp;
+              </Link>
+              &nbsp;
+            </Nav>
+            <Nav className="">
+              <Link to="/" className="btn" id="link">
+                &nbsp;Categories&nbsp;
               </Link>
               &nbsp;
             </Nav>
@@ -52,17 +58,37 @@ function Header() {
               </>
             )}
             {!logged && (
-              <Nav
-                id="link"
-                className="btn"
-                onClick={() => {
-                  setLogged(false);
-                  sessionStorage.clear();
-                  window.location.reload();
-                }}
-              >
-                &nbsp; Log out&nbsp;
-              </Nav>
+              <>
+                <Nav
+                  id="link"
+                  className="btn"
+                  onClick={() => {
+                    setLogged(false);
+                    sessionStorage.clear();
+                    window.location.reload();
+                  }}
+                >
+                  <Link
+                    to="/"
+                    style={{ textDecoration: "none", color: "white" }}
+                  >
+                    &nbsp; Log out&nbsp;
+                  </Link>
+                </Nav>
+              </>
+            )}
+            {sessionStorage["id"] === "0" && (
+              <>
+                &nbsp;
+                <Nav id="link" className="btn">
+                  <Link
+                    to="/admin"
+                    style={{ textDecoration: "none", color: "white" }}
+                  >
+                    &nbsp; Admin&nbsp;
+                  </Link>
+                </Nav>
+              </>
             )}
           </Navbar.Collapse>
         </Navbar>

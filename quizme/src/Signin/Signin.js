@@ -25,6 +25,7 @@ class Signin extends React.Component {
           sessionStorage["surname"] = data[0]["surname"];
           sessionStorage["mail"] = data[0]["email"];
           sessionStorage["avatar"] = data[0]["avatar"];
+          sessionStorage["id"] = data[0]["id_account"];
           fetch("https://opentdb.com/api_token.php?command=request").then(
             (response) => {
               response.json().then((data) => {
@@ -33,6 +34,8 @@ class Signin extends React.Component {
               this.setState({ redirect: true });
             }
           );
+        } else {
+          alert("Incorrect mail or password");
         }
       });
     });

@@ -33,6 +33,49 @@ async def account(request: Request):
     return data
 
 
+@app.get("/getallaccounts")
+async def allacts():
+    mydb = mysql.connector.connect(
+        host="localhost", user="root", database="quizme")
+    cursor = mydb.cursor()
+    cursor.execute(
+        f"SELECT * FROM account WHERE id_account!=0")
+    result = cursor.fetchall()
+    row_headers = [x[0] for x in cursor.description]
+    data = []
+    for res in result:
+        data.append(dict(zip(row_headers, res)))
+    return data
+
+
+@app.post("/modifyaccount")
+async def modifacc(request: Request):
+    mydb = mysql.connector.connect(
+        host="localhost", user="root", database="quizme")
+    body = json.loads(await request.body())
+    cursor = mydb.cursor()
+    try:
+        cursor.execute(
+            f"UPDATE account SET name='{body['name']}',surname='{body['surname']}',email='{body['mail']}',password='{body['pass']}' WHERE id_account={body['id']}")
+        mydb.commit()
+        return "OK"
+    except:
+        mydb.rollback()
+        return "Failed"
+
+
+@app.get("/deleteacc/{id}")
+def delete(id: str):
+    mydb = mysql.connector.connect(
+        host="localhost", user="root", database="quizme")
+    cursor = mydb.cursor()
+    cursor.execute(f"DELETE FROM score WHERE id_account='{id}'")
+    mydb.commit()
+    cursor.execute(f"DELETE FROM account WHERE id_account='{id}'")
+    mydb.commit()
+    return "OK"
+
+
 @app.post("/signin")
 async def sign(request: Request):
     mydb = mysql.connector.connect(
@@ -79,11 +122,13 @@ def gets():
     mydb = mysql.connector.connect(
         host="localhost", user="root", database="quizme")
     cursor = mydb.cursor()
-    cursor.execute(f"SELECT * FROM score ORDER by id_quiz")
+    cursor.execute(
+        f"SELECT *,name FROM score s,account a WHERE a.id_account=s.id_account ORDER by score DESC")
     result = cursor.fetchall()
     row_headers = [x[0] for x in cursor.description]
+    if(len(result) == 0):
+        return "nothing"
     data = []
-    print(result)
     for res in result:
         data.append(dict(zip(row_headers, res)))
     return data

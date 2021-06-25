@@ -10,6 +10,7 @@ import Topic from "./Topic/Topic";
 import Signin from "./Signin/Signin";
 import Signup from "./Signup/Signup";
 import Footer from "./Footer/Footer";
+import Admin from "./Admin/Admin";
 
 function App() {
   return (
@@ -28,6 +29,9 @@ function App() {
           </Route>
           <Route path="/signup">
             <Signup />
+          </Route>
+          <Route path="/admin">
+            <Admin />
           </Route>
           <Route path="/">
             <Home />

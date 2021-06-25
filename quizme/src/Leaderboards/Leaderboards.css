@@ -1,0 +1,21 @@
+#board {
+  margin-top: 5%;
+  margin-bottom: 7%;
+  text-align: center;
+}
+.headers {
+  color: white;
+  -webkit-text-stroke-color: black;
+  -webkit-text-stroke-width: 0.5px;
+  user-select: none;
+}
+.headers:hover {
+  cursor: pointer;
+}
+#empty {
+  text-align: center;
+  margin: 10%;
+  padding: 10%;
+  background-color: white;
+  border-radius: 25px;
+}

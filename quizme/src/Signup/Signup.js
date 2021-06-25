@@ -72,17 +72,19 @@ class Signup extends React.Component {
   };
   handlesubmit = (e) => {
     e.preventDefault();
-    let body = `{"name":"${this.state.name}","surname":"${this.state.surname}","mail":"${this.state.mail}","pass":"${this.state.password}","avatar":${this.state.activated}}`;
-    fetch("http://127.0.0.1:8000/createacc", {
-      method: "POST",
-      body: body,
-    }).then((rep) => {
-      rep.json().then((data) => {
-        console.log(data);
-        if (data === "Success") this.setState({ redirect: true });
-        else alert("An account with that email already exists!");
+    if (this.state.password === this.state.cnfpassword) {
+      let body = `{"name":"${this.state.name}","surname":"${this.state.surname}","mail":"${this.state.mail}","pass":"${this.state.password}","avatar":${this.state.activated}}`;
+      fetch("http://127.0.0.1:8000/createacc", {
+        method: "POST",
+        body: body,
+      }).then((rep) => {
+        rep.json().then((data) => {
+          console.log(data);
+          if (data === "Success") this.setState({ redirect: true });
+          else alert("An account with that email already exists!");
+        });
       });
-    });
+    } else alert("Passwords do not match");
   };
   render() {
     return (
