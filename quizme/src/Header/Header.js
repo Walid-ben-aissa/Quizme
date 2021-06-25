@@ -46,7 +46,7 @@ function Header() {
               <>
                 <Nav className="">
                   <Link to="/signin" className="btn" id="link">
-                    &nbsp;SingIn&nbsp;
+                    &nbsp;SignIn&nbsp;
                   </Link>
                   &nbsp;
                 </Nav>
