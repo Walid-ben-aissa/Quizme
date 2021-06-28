@@ -6,7 +6,14 @@ import edit from "./edit.png";
 import del from "./trash.png";
 import "./Admin.css";
 
+function useForceUpdate() {
+  const [value, setValue] = useState(0); // integer state
+  return () => setValue((value) => value + 1); // update the state to force render
+}
+
 function Admin() {
+  const forceUpdate = useForceUpdate();
+  const [change, setChange] = useState("key1");
   const [content, setContent] = useState(<h1 id="empty">Admin dashboard </h1>);
   const [acctab, setAcctab] = useState(<></>);
   const sendModif = (e) => {
@@ -120,14 +127,14 @@ function Admin() {
   const handledel = (element) => {
     setContent(
       <>
-        <h1 id="empty">
+        <h1 id="empty" key={change}>
           Delete account?
           <br />
           <Button onClick={() => delacc(element)} variant="danger">
             Yes
           </Button>
           &nbsp;
-          <Button variant="secondary" onClick={() => window.location.reload()}>
+          <Button variant="secondary" onClick={forceUpdate}>
             No
           </Button>
         </h1>
