@@ -16,7 +16,7 @@ class Home extends React.Component {
         console.log(data["trivia_categories"]);
         let y = data["trivia_categories"].map((element, idx) => {
           return (
-            <div>
+            <div key={idx}>
               <Link to={`/topic/${element["id"]}`} className="linktop">
                 <Card className="button">
                   <Card.Body>

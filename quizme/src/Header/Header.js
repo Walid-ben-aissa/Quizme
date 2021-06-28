@@ -75,6 +75,11 @@ function Header() {
                     &nbsp; Log out&nbsp;
                   </Link>
                 </Nav>
+                <h5 id="loggedin">
+                  logged in as
+                  <br />
+                  {sessionStorage["name"] + " " + sessionStorage["surname"]}
+                </h5>
               </>
             )}
             {sessionStorage["id"] === "0" && (

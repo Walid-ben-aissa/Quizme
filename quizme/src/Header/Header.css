@@ -2,6 +2,9 @@
   width: 120%;
   margin-left: 0%;
 }
+#loggedin {
+  margin-top: 4%;
+}
 #navbar {
   background-color: #f8f9fa;
   margin-left: 0 !important;

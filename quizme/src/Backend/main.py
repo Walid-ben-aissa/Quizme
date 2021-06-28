@@ -15,6 +15,11 @@ app.add_middleware(
 )
 
 
+@app.get("/")
+def read_root():
+    return {"hello": "world"}
+
+
 @app.post("/createacc")
 async def account(request: Request):
     mydb = mysql.connector.connect(
@@ -25,7 +30,7 @@ async def account(request: Request):
     res = cursor.fetchall()
     if(len(res) == 0):
         cursor.execute(
-            f"INSERT INTO `account` (`id_account`, `name`, `surname`, `password`, `email`, `avatar`) VALUES(NULL,'{body['name']}','{body['surname']}','{body['pass']}','{body['mail']}','{body['avatar']}');")
+            f"INSERT INTO `account` (`id_account`, `name`, `surname`, `password`, `email`) VALUES(NULL,'{body['name']}','{body['surname']}','{body['pass']}','{body['mail']}');")
         mydb.commit()
         data = "Success"
     else:
@@ -120,7 +125,7 @@ def score(score, idq: int, mail: str):
 @app.get("/getscores")
 def gets():
     mydb = mysql.connector.connect(
-        host="localhost", user="root", database="quizme")
+        host="127.0.0.1", user="root", database="quizme")
     cursor = mydb.cursor()
     cursor.execute(
         f"SELECT *,name FROM score s,account a WHERE a.id_account=s.id_account ORDER by score DESC")

@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import "./Topic.css";
 import { Card, Button, Col, Row, Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { Redirect } from "react-router";
 import Timer from "tiny-timer";
 
 const timer = new Timer();
@@ -35,6 +36,7 @@ class Topic extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      key: 0,
       x: 0,
       y: "",
       z: 0,
@@ -53,6 +55,54 @@ class Topic extends React.Component {
       document.getElementById("bod")
     );
   };
+  testing() {
+    if (sessionStorage["mail"] !== undefined) {
+      let id = window.location.pathname.slice(
+        window.location.pathname.indexOf("/", 1) + 1
+      );
+      timer.start(20000);
+      ReactDOM.render(
+        <>
+          <Row>
+            <Col lg={3} xs={12}>
+              Score: {this.state.score}
+            </Col>
+            <Col lg={{ span: 2, offset: 10 }}>
+              Time: {Math.round(timer.time / 1000)}
+            </Col>
+          </Row>
+        </>,
+        document.getElementById("time")
+      );
+      timer.stop();
+      console.log(id);
+      fetch(
+        "https://opentdb.com/api.php?amount=8&difficulty=easy&category=" +
+          id +
+          "&token=" +
+          sessionStorage["token"]
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          if (data["response_code"] === 0) {
+            this.setState({
+              x: data["results"],
+              y: data["results"][0]["category"],
+            });
+          } else if (data["response_code"] === 4)
+            fetch(
+              "https://opentdb.com/api_token.php?command=reset&token=" +
+                sessionStorage["token"]
+            ).then((response) => {
+              response.json().then((data) => {
+                sessionStorage["token"] = data["token"];
+              });
+              window.location.reload();
+            });
+          console.log(data);
+        });
+    }
+  }
   componentDidMount() {
     if (sessionStorage["mail"] !== undefined) {
       let id = window.location.pathname.slice(
@@ -238,7 +288,7 @@ class Topic extends React.Component {
 
   render() {
     return (
-      <>
+      <div key={this.state.key}>
         {sessionStorage["mail"] !== undefined && (
           <Card id="question" border="secondary">
             <Card.Header>{this.state.y}</Card.Header>
@@ -260,15 +310,13 @@ class Topic extends React.Component {
             </Card.Body>
             <Card.Footer id="next">
               {this.state.complete && (
-                <Button
-                  variant="secondary"
+                <Link
+                  to="/"
+                  className="btn btn-secondary"
                   style={{ width: "100%" }}
-                  onClick={() => {
-                    window.location.reload(true);
-                  }}
                 >
-                  Play again?
-                </Button>
+                  Play another quiz?
+                </Link>
               )}
 
               {this.state.done && (
@@ -299,7 +347,7 @@ class Topic extends React.Component {
             <br />
           </>
         )}
-      </>
+      </div>
     );
   }
 }

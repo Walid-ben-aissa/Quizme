@@ -1,59 +1,8 @@
 import React from "react";
 import { Row, Col } from "react-bootstrap";
 import { Form, Button } from "react-bootstrap";
-import img1 from "./avatar1.png";
-import img4 from "./avatar2.png";
-import img3 from "./avatar3.png";
-import img2 from "./avatar4.png";
-import img5 from "./avatar5.png";
-import img6 from "./avatar6.png";
-import ToggleButton from "react-bootstrap/ToggleButton";
-import { ButtonGroup } from "react-bootstrap";
-import { useState } from "react";
 import { Redirect } from "react-router";
 import "./signup.css";
-
-function ToggleButtonExample(props) {
-  const [radioValue, setRadioValue] = useState("1");
-
-  const radios = [
-    { img: { img1 }, value: "1" },
-    { img: { img2 }, value: "2" },
-    { img: { img3 }, value: "3" },
-    { img: { img4 }, value: "4" },
-    { img: { img5 }, value: "5" },
-    { img: { img6 }, value: "6" },
-  ];
-  return (
-    <>
-      <br />
-      <Row>
-        <ButtonGroup className="mb-2">
-          {radios.map((radio, idx) => (
-            <Col>
-              <ToggleButton
-                key={idx}
-                id={`radio-${idx}`}
-                type="radio"
-                variant="light"
-                name="radio"
-                value={radio.value}
-                checked={radioValue === radio.value}
-                onChange={(e) => {
-                  setRadioValue(e.currentTarget.value);
-                  props.callback(e.currentTarget.value);
-                }}
-              >
-                <img src={Object.values(radio.img)} alt="av" className="img" />
-              </ToggleButton>
-            </Col>
-          ))}
-        </ButtonGroup>
-      </Row>
-      <br />
-    </>
-  );
-}
 
 class Signup extends React.Component {
   constructor(props) {
@@ -73,7 +22,7 @@ class Signup extends React.Component {
   handlesubmit = (e) => {
     e.preventDefault();
     if (this.state.password === this.state.cnfpassword) {
-      let body = `{"name":"${this.state.name}","surname":"${this.state.surname}","mail":"${this.state.mail}","pass":"${this.state.password}","avatar":${this.state.activated}}`;
+      let body = `{"name":"${this.state.name}","surname":"${this.state.surname}","mail":"${this.state.mail}","pass":"${this.state.password}"}`;
       fetch("http://127.0.0.1:8000/createacc", {
         method: "POST",
         body: body,
@@ -105,8 +54,6 @@ class Signup extends React.Component {
             </h1>
             <br />
             <Form onSubmit={this.handlesubmit}>
-              Choose an Avatar:
-              <ToggleButtonExample callback={this.handleclick} />
               <Form.Group>
                 <Form.Label>Name</Form.Label>
                 <Form.Control
