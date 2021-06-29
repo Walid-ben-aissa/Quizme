@@ -1,5 +1,4 @@
 import React from "react";
-/* import Counter from "./Timer/Timer"; */
 import Header from "./Header/Header";
 import Home from "./Home/Home";
 import Leaderboards from "./Leaderboards/Leaderboards";
