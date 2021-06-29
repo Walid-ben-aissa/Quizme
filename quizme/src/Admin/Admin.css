@@ -1,0 +1,23 @@
+#side {
+  text-align: center;
+  padding: 0;
+  padding-top: 0;
+  margin-right: 20px;
+  margin-left: 20px;
+}
+.icon {
+  height: 20px;
+}
+.butt {
+  height: 624.2px;
+  width: 100%;
+  background-color: black;
+}
+.butt:hover {
+  filter: contrast(100%);
+}
+#empty {
+  text-align: center;
+  background-color: white;
+  border-radius: 25px;
+}

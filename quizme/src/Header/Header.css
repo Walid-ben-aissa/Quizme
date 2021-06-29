@@ -1,0 +1,28 @@
+.logo {
+  width: 120%;
+  margin-left: 0%;
+}
+#loggedin {
+  margin-top: 4%;
+}
+#navbar {
+  background-color: #f8f9fa;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+#link:link {
+  text-decoration: none;
+}
+#link:hover {
+  filter: invert(100%);
+}
+#link:focus {
+  box-shadow: none;
+}
+#link {
+  cursor: pointer;
+  color: white;
+  background-color: black;
+  border-radius: 10%;
+  margin-top: 3vw;
+}

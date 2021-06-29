@@ -1,0 +1,1 @@
+{"id":"a37dba58-dbb6-45db-b36e-c2d5b707127e","space":6689,"runtime":"python3.7","name":"Backend","path":"qctb37","project":"a0e1kay3","account":"144798365827","region":"eu-central-1","deps":["fastapi","mysql.connector"],"envs":null,"public":true,"log_level":"debug","cron":""}
