@@ -55,54 +55,7 @@ class Topic extends React.Component {
       document.getElementById("bod")
     );
   };
-  testing() {
-    if (sessionStorage["mail"] !== undefined) {
-      let id = window.location.pathname.slice(
-        window.location.pathname.indexOf("/", 1) + 1
-      );
-      timer.start(20000);
-      ReactDOM.render(
-        <>
-          <Row>
-            <Col lg={3} xs={12}>
-              Score: {this.state.score}
-            </Col>
-            <Col lg={{ span: 2, offset: 10 }}>
-              Time: {Math.round(timer.time / 1000)}
-            </Col>
-          </Row>
-        </>,
-        document.getElementById("time")
-      );
-      timer.stop();
-      console.log(id);
-      fetch(
-        "https://opentdb.com/api.php?amount=8&difficulty=easy&category=" +
-          id +
-          "&token=" +
-          sessionStorage["token"]
-      )
-        .then((response) => response.json())
-        .then((data) => {
-          if (data["response_code"] === 0) {
-            this.setState({
-              x: data["results"],
-              y: data["results"][0]["category"],
-            });
-          } else if (data["response_code"] === 4)
-            fetch(
-              "https://opentdb.com/api_token.php?command=reset&token=" +
-                sessionStorage["token"]
-            ).then((response) => {
-              response.json().then((data) => {
-                sessionStorage["token"] = data["token"];
-              });
-              window.location.reload();
-            });
-          console.log(data);
-        });
-    }
-  }
+
   componentDidMount() {
     if (sessionStorage["mail"] !== undefined) {
       let id = window.location.pathname.slice(
@@ -143,9 +96,22 @@ class Topic extends React.Component {
                 sessionStorage["token"]
             ).then((response) => {
               response.json().then((data) => {
-                sessionStorage["token"] = data["token"];
+                let token = data["token"];
+                sessionStorage["token"] = token;
+                fetch(
+                  "https://opentdb.com/api.php?amount=8&difficulty=easy&category=" +
+                    id +
+                    "&token=" +
+                    token
+                ).then((rep) =>
+                  rep.json().then((data) => {
+                    this.setState({
+                      x: data["results"],
+                      y: data["results"][0]["category"],
+                    });
+                  })
+                );
               });
-              window.location.reload();
             });
           console.log(data);
         });
@@ -271,6 +237,7 @@ class Topic extends React.Component {
       let id = window.location.pathname.slice(
         window.location.pathname.indexOf("/", 1) + 1
       );
+      if(this.state.score!==0)
       fetch(
         "http://127.0.0.1:8000/addscore/" +
           sessionStorage["mail"] +
