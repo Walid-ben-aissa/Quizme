@@ -1,14 +1,14 @@
 import Logo from "../Me.png";
 import { Navbar, Row, Col, Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import "./Header.css";
 
-function Header() {
-  const [logged, setLogged] = useState(false);
+function Header(props) {
   useEffect(() => {
-    if (sessionStorage["mail"] === undefined) setLogged(true);
-  }, []);
+    console.log(props.log);
+  });
+  console.log("hey");
   return (
     <Row id="navbar">
       <Col xs={{ span: 3 }} sm={{ span: 3 }} lg={1}>
@@ -42,7 +42,7 @@ function Header() {
               &nbsp;
             </Nav>
 
-            {logged && (
+            {!props.log && (
               <>
                 <Nav className="">
                   <Link to="/signin" className="btn" id="link">
@@ -57,15 +57,14 @@ function Header() {
                 </Nav>
               </>
             )}
-            {!logged && (
+            {props.log && (
               <>
                 <Nav
                   id="link"
                   className="btn"
                   onClick={() => {
-                    setLogged(false);
                     sessionStorage.clear();
-                    window.location.reload();
+                    props.call(false);
                   }}
                 >
                   <Link

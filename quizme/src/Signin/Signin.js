@@ -9,9 +9,9 @@ class Signin extends React.Component {
     super(props);
     this.state = { redirect: false };
   }
-  componentWillUnmount = () => {
+  /*  componentWillUnmount = () => {
     window.location.reload();
-  };
+  }; */
   handlesubmit = (e) => {
     e.preventDefault();
     let body = `{"mail":"${this.state.mail}","pass":"${this.state.pass}"}`;
@@ -32,6 +32,7 @@ class Signin extends React.Component {
                 sessionStorage["token"] = data["token"];
               });
               this.setState({ redirect: true });
+              this.props.call(true);
             }
           );
         } else {
@@ -91,7 +92,7 @@ class Signin extends React.Component {
             </Form>
           </Col>
         </Row>
-        {this.state.redirect && <Redirect to="/" />}
+        {this.state.redirect && <Redirect push to="/" />}
       </div>
     );
   }

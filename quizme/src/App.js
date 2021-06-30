@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Header from "./Header/Header";
 import Home from "./Home/Home";
 import Leaderboards from "./Leaderboards/Leaderboards";
@@ -12,9 +12,13 @@ import Footer from "./Footer/Footer";
 import Admin from "./Admin/Admin";
 
 function App() {
+  const [logged, setLogged] = useState(false);
+  const logging = (val) => {
+    setLogged(val);
+  };
   return (
     <div id="main">
-      <Header />
+      <Header log={logged} call={logging} />
       <Container fluid>
         <Switch>
           <Route path="/leaderboards">
@@ -24,7 +28,7 @@ function App() {
             <Topic />
           </Route>
           <Route path="/signin">
-            <Signin />
+            <Signin call={logging} />
           </Route>
           <Route path="/signup">
             <Signup />
