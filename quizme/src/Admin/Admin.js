@@ -20,7 +20,7 @@ function Admin() {
     let cnfpwd = document.getElementById("cnfpassword").value;
     if (cnfpwd === password) {
       let body = `{"id":"${id}","name":"${name}","surname":"${surname}","mail":"${mail}","pass":"${password}"}`;
-      fetch("http://127.0.0.1:8000/modifyaccount", {
+      fetch("https://12d1ol.deta.dev/modifyaccount", {
         method: "POST",
         body: body,
       }).then((rep) =>
@@ -103,7 +103,7 @@ function Admin() {
     );
   };
   const delacc = (element) => {
-    fetch("http://127.0.0.1:8000/deleteacc/" + element["id_account"]).then(
+    fetch("https://12d1ol.deta.dev/deleteacc/" + element["id_account"]).then(
       (rep) =>
         rep.json().then((data) => {
           if (data === "OK") {
@@ -134,7 +134,7 @@ function Admin() {
   };
 
   useEffect(() => {
-    fetch("http://127.0.0.1:8000/getallaccounts").then((rep) =>
+    fetch("https://12d1ol.deta.dev/getallaccounts").then((rep) =>
       rep.json().then((data) => {
         console.log(data);
         let y = data.map((element, idx) => {

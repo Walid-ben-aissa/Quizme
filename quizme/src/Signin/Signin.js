@@ -15,7 +15,7 @@ class Signin extends React.Component {
   handlesubmit = (e) => {
     e.preventDefault();
     let body = `{"mail":"${this.state.mail}","pass":"${this.state.pass}"}`;
-    fetch("http://127.0.0.1:8000/signin", {
+    fetch("https://12d1ol.deta.dev/signin", {
       method: "POST",
       body: body,
     }).then((rep) => {

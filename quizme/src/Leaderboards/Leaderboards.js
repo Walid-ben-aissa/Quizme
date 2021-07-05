@@ -11,7 +11,7 @@ function getid(cat, x) {
 class Leaderboards extends React.Component {
   state = { x: true, show1: false, show2: true };
   componentDidMount() {
-    fetch("http://127.0.0.1:8000/getscores").then((rep) => {
+    fetch("https://12d1ol.deta.dev/getscores").then((rep) => {
       rep.json().then((data) => {
         if (data !== "nothing") {
           let scores = {};

@@ -23,7 +23,7 @@ class Signup extends React.Component {
     e.preventDefault();
     if (this.state.password === this.state.cnfpassword) {
       let body = `{"name":"${this.state.name}","surname":"${this.state.surname}","mail":"${this.state.mail}","pass":"${this.state.password}"}`;
-      fetch("http://127.0.0.1:8000/createacc", {
+      fetch("https://12d1ol.deta.dev/createacc", {
         method: "POST",
         body: body,
       }).then((rep) => {

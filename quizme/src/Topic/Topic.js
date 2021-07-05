@@ -3,7 +3,6 @@ import ReactDOM from "react-dom";
 import "./Topic.css";
 import { Card, Button, Col, Row, Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { Redirect } from "react-router";
 import Timer from "tiny-timer";
 
 const timer = new Timer();
@@ -237,19 +236,19 @@ class Topic extends React.Component {
       let id = window.location.pathname.slice(
         window.location.pathname.indexOf("/", 1) + 1
       );
-      if(this.state.score!==0)
-      fetch(
-        "http://127.0.0.1:8000/addscore/" +
-          sessionStorage["mail"] +
-          "/" +
-          id +
-          "/" +
-          this.state.score
-      ).then((rep) => {
-        rep.json().then((data) => {
-          console.log(data);
+      if (this.state.score !== 0)
+        fetch(
+          "https://12d1ol.deta.dev/addscore/" +
+            sessionStorage["mail"] +
+            "/" +
+            id +
+            "/" +
+            this.state.score
+        ).then((rep) => {
+          rep.json().then((data) => {
+            console.log(data);
+          });
         });
-      });
     }
   };
 
