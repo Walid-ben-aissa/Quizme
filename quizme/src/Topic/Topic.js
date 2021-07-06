@@ -118,11 +118,11 @@ class Topic extends React.Component {
   }
   reset = (typ) => {
     if (this.state.done) {
-      document.getElementById("correct").style.backgroundColor = "#6c757d";
-      document.getElementById("incorrect1").style.backgroundColor = "#6c757d";
+      document.getElementById("a1").style.backgroundColor = "#6c757d";
+      document.getElementById("a2").style.backgroundColor = "#6c757d";
       if (this.state.type === "multiple") {
-        document.getElementById("incorrect2").style.backgroundColor = "#6c757d";
-        document.getElementById("incorrect3").style.backgroundColor = "#6c757d";
+        document.getElementById("a3").style.backgroundColor = "#6c757d";
+        document.getElementById("a4").style.backgroundColor = "#6c757d";
       }
       this.setState({ done: false });
       this.test();
@@ -134,17 +134,17 @@ class Topic extends React.Component {
     timer.stop();
     console.log(timer.time);
     if (!this.state.done) {
-      document.getElementById("correct").style.backgroundColor = "green";
-      document.getElementById("incorrect1").style.backgroundColor = "red";
+      document.getElementById("a1").style.backgroundColor = "green";
+      document.getElementById("a2").style.backgroundColor = "red";
       if (typ === "multiple") {
-        document.getElementById("incorrect2").style.backgroundColor = "red";
-        document.getElementById("incorrect3").style.backgroundColor = "red";
+        document.getElementById("a3").style.backgroundColor = "red";
+        document.getElementById("a4").style.backgroundColor = "red";
       }
       this.setState({
         done: true,
         type: typ,
       });
-      if (id === "correct") {
+      if (id === "a1") {
         this.setState({
           score: this.state.score + Math.round(x / 10),
         });
@@ -165,15 +165,15 @@ class Topic extends React.Component {
       incanswers = slide["incorrect_answers"].map((word) => decode(word));
       let buttons = [
         <Button
-          id="correct"
-          onClick={() => this.verify("correct", slide["type"], x)}
+          id="a1"
+          onClick={() => this.verify("a1", slide["type"], x)}
           variant="secondary"
           className="answers"
         >
           {canswers}
         </Button>,
         <Button
-          id="incorrect1"
+          id="a2"
           onClick={() => this.verify("incorrect", slide["type"], x)}
           variant="secondary"
           className="answers"
@@ -184,7 +184,7 @@ class Topic extends React.Component {
       if (slide["type"] === "multiple") {
         buttons.push(
           <Button
-            id="incorrect2"
+            id="a3"
             onClick={() => this.verify("incorrect", slide["type"], x)}
             variant="secondary"
             className="answers"
@@ -192,7 +192,7 @@ class Topic extends React.Component {
             {incanswers[1]}
           </Button>,
           <Button
-            id="incorrect3"
+            id="a4"
             onClick={() => this.verify("incorrect", slide["type"], x)}
             variant="secondary"
             className="answers"

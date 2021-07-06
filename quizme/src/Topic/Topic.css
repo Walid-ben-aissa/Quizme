@@ -11,19 +11,19 @@
   text-align: center;
   padding: 10%;
 }
-#correct:focus {
+#a1:focus {
   outline: none;
   box-shadow: none;
 }
-#incorrect1:focus {
+#a2:focus {
   outline: none;
   box-shadow: none;
 }
-#incorrect2:focus {
+#a3:focus {
   outline: none;
   box-shadow: none;
 }
-#incorrect3:focus {
+#a4:focus {
   outline: none;
   box-shadow: none;
 }
