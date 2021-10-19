@@ -13,6 +13,9 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+host = "localhost"
+user = "root"
+database = "quizme"
 
 
 @app.get("/")
@@ -23,7 +26,7 @@ def read_root():
 @app.post("/createacc")
 async def account(request: Request):
     mydb = mysql.connector.connect(
-        host="freedb.tech", user="freedbtech_walidquizme", password="walid030", database="freedbtech_quizme")
+        host=host, user=user, database=database)
     cursor = mydb.cursor()
     body = json.loads(await request.body())
     cursor.execute(f"SELECT * FROM account WHERE email='{body['mail']}'")
@@ -41,7 +44,7 @@ async def account(request: Request):
 @app.get("/getallaccounts")
 async def allacts():
     mydb = mysql.connector.connect(
-        host="freedb.tech", user="freedbtech_walidquizme", password="walid030", database="freedbtech_quizme")
+        host=host, user=user, database=database)
     cursor = mydb.cursor()
     cursor.execute(
         f"SELECT * FROM account WHERE id_account!=0")
@@ -56,7 +59,7 @@ async def allacts():
 @app.post("/modifyaccount")
 async def modifacc(request: Request):
     mydb = mysql.connector.connect(
-        host="freedb.tech", user="freedbtech_walidquizme", password="walid030", database="freedbtech_quizme")
+        host=host, user=user, database=database)
     body = json.loads(await request.body())
     cursor = mydb.cursor()
     try:
@@ -72,7 +75,7 @@ async def modifacc(request: Request):
 @app.get("/deleteacc/{id}")
 def delete(id: str):
     mydb = mysql.connector.connect(
-        host="freedb.tech", user="freedbtech_walidquizme", password="walid030", database="freedbtech_quizme")
+        host=host, user=user, database=database)
     cursor = mydb.cursor()
     cursor.execute(f"DELETE FROM score WHERE id_account='{id}'")
     mydb.commit()
@@ -84,7 +87,7 @@ def delete(id: str):
 @app.post("/signin")
 async def sign(request: Request):
     mydb = mysql.connector.connect(
-        host="freedb.tech", user="freedbtech_walidquizme", password="walid030", database="freedbtech_quizme")
+        host=host, user=user, database=database)
     cursor = mydb.cursor()
     body = json.loads(await request.body())
     cursor.execute(
@@ -104,7 +107,7 @@ async def sign(request: Request):
 @app.get("/addscore/{mail}/{idq}/{score}")
 def score(score, idq: int, mail: str):
     mydb = mysql.connector.connect(
-        host="freedb.tech", user="freedbtech_walidquizme", password="walid030", database="freedbtech_quizme")
+        host=host, user=user, database=database)
     cursor = mydb.cursor()
     cursor.execute(f"SELECT id_account FROM account WHERE email='{mail}'")
     ida = cursor.fetchone()
@@ -125,7 +128,7 @@ def score(score, idq: int, mail: str):
 @app.get("/getscores")
 def gets():
     mydb = mysql.connector.connect(
-        host="freedb.tech", user="freedbtech_walidquizme", password="walid030", database="freedbtech_quizme")
+        host="127.0.0.1", user="root", database="quizme")
     cursor = mydb.cursor()
     cursor.execute(
         f"SELECT *,name FROM score s,account a WHERE a.id_account=s.id_account ORDER by score DESC")

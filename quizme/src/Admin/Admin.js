@@ -104,7 +104,7 @@ function Admin() {
     );
   };
   const delacc = (element) => {
-    fetch(dbhost + "deleteacc/" + element["id_account"]).then((rep) =>
+    fetch(dbhost + "/deleteacc/" + element["id_account"]).then((rep) =>
       rep.json().then((data) => {
         if (data === "OK") {
           setContent(<h1 id="empty">Account deleted successfully </h1>);
