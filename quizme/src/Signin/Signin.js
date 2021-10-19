@@ -2,6 +2,7 @@ import React from "react";
 import { Row, Col, Button, Form } from "react-bootstrap";
 import { Redirect } from "react-router";
 import "./Signin.css";
+const dbhost = "http://127.0.0.1:8000";
 
 class Signin extends React.Component {
   redirect = () => {};
@@ -15,7 +16,7 @@ class Signin extends React.Component {
   handlesubmit = (e) => {
     e.preventDefault();
     let body = `{"mail":"${this.state.mail}","pass":"${this.state.pass}"}`;
-    fetch("https://12d1ol.deta.dev/signin", {
+    fetch(dbhost + "/signin", {
       method: "POST",
       body: body,
     }).then((rep) => {

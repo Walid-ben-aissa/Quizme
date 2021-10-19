@@ -4,6 +4,7 @@ import { Form, Button } from "react-bootstrap";
 import { Redirect } from "react-router";
 import "./signup.css";
 
+const dbhost = "http://127.0.0.1:8000";
 class Signup extends React.Component {
   constructor(props) {
     super(props);
@@ -23,7 +24,7 @@ class Signup extends React.Component {
     e.preventDefault();
     if (this.state.password === this.state.cnfpassword) {
       let body = `{"name":"${this.state.name}","surname":"${this.state.surname}","mail":"${this.state.mail}","pass":"${this.state.password}"}`;
-      fetch("https://12d1ol.deta.dev/createacc", {
+      fetch(dbhost + "/createacc", {
         method: "POST",
         body: body,
       }).then((rep) => {

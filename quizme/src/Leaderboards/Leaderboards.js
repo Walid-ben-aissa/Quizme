@@ -3,6 +3,8 @@ import { Card, Col } from "react-bootstrap";
 import Accordion from "react-bootstrap/Accordion";
 import "./Leaderboards.css";
 
+const dbhost = "http://127.0.0.1:8000";
+
 function getid(cat, x) {
   for (let i of cat) {
     if (i["id"] === x) return i["name"];
@@ -11,7 +13,7 @@ function getid(cat, x) {
 class Leaderboards extends React.Component {
   state = { x: true, show1: false, show2: true };
   componentDidMount() {
-    fetch("https://12d1ol.deta.dev/getscores").then((rep) => {
+    fetch(dbhost + "/getscores").then((rep) => {
       rep.json().then((data) => {
         if (data !== "nothing") {
           let scores = {};

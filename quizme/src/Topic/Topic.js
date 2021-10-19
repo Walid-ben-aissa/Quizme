@@ -4,6 +4,7 @@ import "./Topic.css";
 import { Card, Button, Col, Row, Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Timer from "tiny-timer";
+const dbhost = "http://127.0.0.1:8000";
 
 const timer = new Timer();
 
@@ -238,7 +239,8 @@ class Topic extends React.Component {
       );
       if (this.state.score !== 0)
         fetch(
-          "https://12d1ol.deta.dev/addscore/" +
+          dbhost +
+            "/addscore/" +
             sessionStorage["mail"] +
             "/" +
             id +

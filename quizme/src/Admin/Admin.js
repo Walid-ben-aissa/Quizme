@@ -5,6 +5,7 @@ import Form from "react-bootstrap/Form";
 import edit from "./edit.png";
 import del from "./trash.png";
 import "./Admin.css";
+const dbhost = "http://127.0.0.1:8000";
 
 function Admin() {
   const [content, setContent] = useState(<h1 id="empty">Admin dashboard </h1>);
@@ -20,7 +21,7 @@ function Admin() {
     let cnfpwd = document.getElementById("cnfpassword").value;
     if (cnfpwd === password) {
       let body = `{"id":"${id}","name":"${name}","surname":"${surname}","mail":"${mail}","pass":"${password}"}`;
-      fetch("https://12d1ol.deta.dev/modifyaccount", {
+      fetch(dbhost + "/modifyaccount", {
         method: "POST",
         body: body,
       }).then((rep) =>
@@ -103,13 +104,12 @@ function Admin() {
     );
   };
   const delacc = (element) => {
-    fetch("https://12d1ol.deta.dev/deleteacc/" + element["id_account"]).then(
-      (rep) =>
-        rep.json().then((data) => {
-          if (data === "OK") {
-            setContent(<h1 id="empty">Account deleted successfully </h1>);
-          } else alert("Could not delete account");
-        })
+    fetch(dbhost + "deleteacc/" + element["id_account"]).then((rep) =>
+      rep.json().then((data) => {
+        if (data === "OK") {
+          setContent(<h1 id="empty">Account deleted successfully </h1>);
+        } else alert("Could not delete account");
+      })
     );
   };
   const handledel = (element) => {
@@ -134,7 +134,7 @@ function Admin() {
   };
 
   useEffect(() => {
-    fetch("https://12d1ol.deta.dev/getallaccounts").then((rep) =>
+    fetch(dbhost + "/getallaccounts").then((rep) =>
       rep.json().then((data) => {
         console.log(data);
         let y = data.map((element, idx) => {
